@@ -8,3 +8,45 @@ ggplot(mpg, aes(x=class)) + geom_bar()
 
 ggplot(class_count, aes(x=class, y=n)) + geom_bar(stat="identity")
 
+ggplot(mpg, aes(x=displ, hwy)) + geom_point(color="grey") + 
+  stat_summary(fun="mean", geom="line", size=1, linetype="dashed")
+
+ggplot(mpg, aes(x=class, fill=drv)) + geom_bar()
+
+ggplot(mpg, aes(x=class, fill=drv)) + geom_bar(position="dodge")
+
+ggplot(mpg, aes(x=class, fill=drv)) + geom_bar(position="fill")
+
+ggplot(mpg, aes(x=displ, y=hwy, color=class)) + 
+  geom_point() + 
+  scale_x_continuous() + 
+  scale_y_continuous() +
+  scale_color_discrete()
+
+ggplot(mpg, aes(x=cty, y=hwy)) + geom_point()
+
+ggplot(mpg, aes(x=cty, y=hwy)) + geom_point() + scale_x_reverse() + 
+  scale_y_reverse()
+
+ggplot(mpg, aes(x=class, fill=drv)) + 
+  geom_bar(position="fill") + 
+  scale_y_continuous(breaks=seq(0,1,by=.2), labels=scales::percent)
+
+ggplot(mpg, aes(x=displ, y=hwy, color=class)) + 
+  geom_point() + 
+  scale_color_brewer(palette="Set2")
+
+ggplot(mpg, aes(x=displ, y=hwy)) + 
+  geom_point() + 
+  coord_cartesian(xlim=c(0,5))
+
+ggplot(mpg, aes(x=class)) + 
+  geom_bar() + 
+  coord_flip()
+
+
+
+
+
+
+
