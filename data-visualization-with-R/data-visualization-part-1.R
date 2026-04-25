@@ -1,3 +1,5 @@
+library(ggplot2)
+
 ggplot(mpg, aes(x=displ, y=hwy)) + 
   geom_point(aes(color=class)) + 
   geom_smooth(se=FALSE)
