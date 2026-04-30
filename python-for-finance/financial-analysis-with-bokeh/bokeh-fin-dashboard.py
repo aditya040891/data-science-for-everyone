@@ -31,7 +31,10 @@ def get_data(t1, t2):
                         t2:"t2", 
                         t1 + "_returns":"t1_returns",
                         t2 + "_returns": "t2_returns"})
-    return df.dropna()
+    df = df.dropna()
+    df = df.reset_index()
+    return df
+
 
 def nix(val, lst):
     return [x for x in lst if x != val]
@@ -49,7 +52,7 @@ source = ColumnDataSource(data=data)
 
 
 ## Descriptive Statistics
-stats = round(data.describe().reset_index(), 2)
+stats = round(data.drop("Date", axis=1).describe().reset_index(), 2)
 stats_source = ColumnDataSource(data=stats)
 stat_columns = [TableColumn(field=col, title=col) for col in stats.columns]
 data_table = DataTable(source=stats_source, 
@@ -120,8 +123,9 @@ def ticker2_change(attrname, old, new):
 def update():
     t1, t2 = ticker1.value, ticker2.value
     df = get_data(t1, t2)
-    source.data = df
-    stats_source.data = round(df.describe().reset_index(), 2)
+    source.data = ColumnDataSource.from_df(df)
+    stats_df = df.drop('Date', axis=1).describe().reset_index()
+    stats_source.data = ColumnDataSource.drom_df(stats_df)
     corr.title.text = "%s returns vs. %s returns" % (t1, t2)
     ts1.title.text, ts2.title.text = t1, t2
     
@@ -140,7 +144,8 @@ show(layout)
 
 # Bokeh server
 
-
+curdoc().add_root(layout)
+curdoc().title = "Stock Dashboard"
 
 
 
